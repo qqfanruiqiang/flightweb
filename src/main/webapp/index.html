@@ -267,6 +267,23 @@
             }
         });
     }
+    function shanchu(data) {
+        $.ajax({
+            url:"http://localhost:8088/flight/shanchu",
+            type:"post",
+            datatype:"json",
+            data:{
+                "id":data
+            },
+            success:function(){
+                alert("删除成功!")
+                empTable.ajax.reload();
+            },
+            error:function(){
+                alert("删除失败");
+            }
+        });
+    }
 </script>
 
 <script type="text/html" id="addHtml">
