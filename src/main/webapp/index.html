@@ -75,7 +75,218 @@
         }
 
     })
+    function xinzeng() {
+        $.ajax({
+            url:"http://localhost:8088/flight/xiala1",
+            type:"post",
+            dataType:"json",
+            data:{},
+            success:function(result){
+                var strs="<option value=0>请选择</option>";
+                for(var i=0;i<result.length;i++){
+                    strs+="<option value="+result[i].id+">" +result[i].name+"</option>";
+                }
+                $("#xiala1").html(strs);
+            },
+            error:function(){
+                alert("查询下拉框1失败");
+            }
+        });
+        $.ajax({
+            url:"http://localhost:8088/flight/xialaa",
+            type:"post",
+            dataType:"json",
+            data:{},
+            success:function(result){
+                var strs="<option value=0>请选择</option>";
+                for(var i=0;i<result.length;i++){
+                    strs+="<option value="+result[i].id+">" +result[i].name+"</option>";
+                }
+                $("#xialaa").html(strs);
+            },
+            error:function(){
+                alert("查询下拉框a失败");
+            }
+        });
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        $.ajax({
+            url:"http://localhost:8088/flight/queryJixing",
+            type:"post",
+            datatype:"json",
+            data:{},
+            success:function (result) {
+                var strs="<option value=0>请选择</option>";
+                for(var i=0;i<result.length;i++){
+                    strs+="<option value="+result[i].id+">" +result[i].name+"</option>";
+                }
+                $("#jixing").html(strs);
+            },
+            error:function () {
+                alert("查询岗位下拉框失败");
+            }
+        })
+        $.ajax({
+            url:"http://localhost:8088/flight/queryJipiao",
+            type:"post",
+            datatype:"json",
+            data:{},
+            success:function (result) {
+                var strs="<option value=0>请选择</option>";
+                for(var i=0;i<result.length;i++){
+                    strs+="<option value="+result[i].id+">" +result[i].name+"</option>";
+                }
+                $("#jipiao").html(strs);
+            },
+            error:function () {
+                alert("查询岗位下拉框失败");
+            }
+        })
+        var ee=$("#addHtml").html();
+        bootbox.confirm({
+            title:'新增信息',
+            message:ee,
+            buttons:{
+                confirm:{
+                    lable:'提交',
+                    className:'btn-success'
+                },
+                cancel:{
+                    lable:'取消',
+                    className:'btn-danger'
+                }},
+            size:'large',
+            callback:function (res) {
+                if(res){
+                    $.ajax({
+                        url:"http://localhost:8088/flight/addflight",
+                        type:"post",
+                        datatype:"json",
+                        data:$("#addform").serialize(),
+                        success:function () {
+                            alert("新增成功!")
+                            empTable.ajax.reload();
+                        },
+                        error:function () {
+                            alert("新增失败");
+                        }
+                    })
+                }
+            }
+
+
+        })
+
+
+    }
+
+    function changexiala1() {
+        $("#xiala3").empty();
+        var pid=$("#xiala1").val();
+        $.ajax({
+            url:"http://localhost:8088/flight/xiala2",
+            type:"post",
+            dataType:"json",
+            data:{
+                "id":pid
+            },
+            success:function(result){
+                var strs="<option value=0>请选择</option>";
+                for(var i=0;i<result.length;i++){
+                    strs+="<option value="+result[i].id+">" +result[i].name+"</option>";
+                }
+                $("#xiala2").html(strs);
+            },
+            error:function(){
+                alert("查询下拉框2失败");
+            }
+        });
+    }
+    function changexiala2() {
+        var pid=$("#xiala2").val();
+        $.ajax({
+            url:"http://localhost:8088/flight/xiala3",
+            type:"post",
+            dataType:"json",
+            data:{
+                "id":pid
+            },
+            success:function(result){
+                var strs="<option value=0>请选择</option>";
+                for(var i=0;i<result.length;i++){
+                    strs+="<option value="+result[i].id+">" +result[i].name+"</option>";
+                }
+                $("#xiala3").html(strs);
+            },
+            error:function(){
+                alert("查询下拉框3失败");
+            }
+        });
+    }
+    //=======================================================================================================
+
+    function changexialaa() {
+        $("#xialac").empty();
+        var pid=$("#xialaa").val();
+        $.ajax({
+            url:"http://localhost:8088/flight/xialab",
+            type:"post",
+            dataType:"json",
+            data:{
+                "id":pid
+            },
+            success:function(result){
+                var strs="<option value=0>请选择</option>";
+                for(var i=0;i<result.length;i++){
+                    strs+="<option value="+result[i].id+">" +result[i].name+"</option>";
+                }
+                $("#xialab").html(strs);
+            },
+            error:function(){
+                alert("查询下拉框b失败");
+            }
+        });
+    }
+    function changexialab() {
+        var pid=$("#xialab").val();
+        $.ajax({
+            url:"http://localhost:8088/flight/xialac",
+            type:"post",
+            dataType:"json",
+            data:{
+                "id":pid
+            },
+            success:function(result){
+                var strs="<option value=0>请选择</option>";
+                for(var i=0;i<result.length;i++){
+                    strs+="<option value="+result[i].id+">" +result[i].name+"</option>";
+                }
+                $("#xialac").html(strs);
+            },
+            error:function(){
+                alert("查询下拉框c失败");
+            }
+        });
+    }
 </script>
 
+<script type="text/html" id="addHtml">
+    <form id="addform">
+        航班姓名:<input   name="name"><br>
+        起飞时间:<input name="startTime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" ><br>
+        到达时间:<input name="endTime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" ><br>
+        机型:<select id="jixing" name="typeId"></select><br>
+        出发机场:
+        <select id="xiala1"  onchange="changexiala1()"></select>
+        <select id="xiala2"  onchange="changexiala2()"></select>
+        <select id="xiala3" name="startTerminalId"></select><br>
+        到达机场:
+        <select id="xialaa"  onchange="changexialaa()"></select>
+        <select id="xialab"  onchange="changexialab()"></select>
+        <select id="xialac" name="endTerminalId"></select><br>
+        机票:<select id="jipiao" name="jicang"></select>
+        票数:<input name="count">
+        票价:<input name="price">
+    </form>
+</script>
 
 </html>
